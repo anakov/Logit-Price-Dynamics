@@ -114,12 +114,13 @@ else
   relentropyNext = [];
 end
   
-% Calculate adjustment values Dnow and Dnext
-  Dnow  = ones(nump,1)*EVnow - Vnow;   
-  Dnext = ones(nump,1)*EVnext - Vnext; 
-      
+% Adjustment costs    
   adjcostNow = cost(adjtype, alpha, noise, relentropyNow);
   adjcostNext = cost(adjtype, alpha, noise, relentropyNext);
+
+% Calculate adjustment values Dnow and Dnext
+  Dnow  = ones(nump,1)*EVnow - Vnow -wnow*adjcostNow;   
+  Dnext = ones(nump,1)*EVnext - Vnext -wnext*adjcostNext;   
   
 % Calculate probabilities of adjustment Lambdanow and Lambdanext, and ExpectGAINSnext    
   LambdaNow = adjustment(adjtype, Dnow/wnow, ksi, alpha, lbar);
@@ -131,7 +132,7 @@ end
   %timecostNext = timingcost(adjtype, ksi, timingentropyNext);      %NEED TO CALCULATE ARGUMENTS OF THIS FUNCTION
   timecostNext = timingcost(adjtype, lbar, ksi, LambdaNext);
   
-  CONTINVALnext = Vnext + (Dnext - wnext*adjcostNext).*LambdaNext - wnext*timecostNext;
+  CONTINVALnext = Vnext + Dnext.*LambdaNext - wnext*timecostNext;
 
 % Calculate PhiTildeNow from PhiHatNow = Phi_t-1
   PhiTildeNow = Rnow*PhiHatNow*TRANSMAT';

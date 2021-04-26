@@ -11,9 +11,6 @@
 % Pdist (lagged), V, C, PI
 
 
-WARNING: THIS PROGRAM HAS NOT YET BEEN REWRITTEN TO PUT TIME COSTS IN LABOR CONSTRAINT.
-SEE computeirfM.m FOR A CORRECT EXAMPLE.
-
 % Extract shocks
   d_R_path = STATEHISTORY(1,:);                                            % interest rate shock
   d_A_path = STATEHISTORY(2,:);                                            % TFP shock
@@ -59,30 +56,32 @@ SEE computeirfM.m FOR A CORRECT EXAMPLE.
  
   relentropy_path = ones(nump,1)*(log(nump) + sum(logitprobMAT_path.*log(max(logitprobMAT_path,eps^.5))));
   adjcost_path = cost(adjtype, alpha, noise, relentropy_path);
-  Lambda_path = adjustment(adjtype, D_path./(ones(gridsize,1)*w_path), ksi, alpha, lbar, adjcost_path);
 
-% Constructing PhiTilde (beginning-of-t distributions) from PhiHat (lagged distributions)
-  PhiTilde_path = NaN*zeros(gridsize,TT);         
-  for time=1:TT
-      Rnow = Rmatrix(nump, PI_path(time), pstep);
-      PhiTildeNow = Rnow*reshape(PhiHat_path(:,time),nump,nums)*TRANSMAT';
-      PhiTilde_path(:,time)= PhiTildeNow(:);       % PdistEroded history
-  end
-
-% Now that we have constructed PhiTilde, we no longer need PhiHat.
-  Phi_path = PhiHat_path;
-  Phi_path(:,1) = [];  % here we are losing 1 period for Phi and everything computed from Phi
-% So now we have history of Phi_t = distribution at time of production in period t.
-
-% Compute mass of adjusters and fraction of adjusting firms
-  Adjusters_path = Lambda_path.*PhiTilde_path;
-  frac_adjusters_path = sum(Adjusters_path);
-
-  ex_ante_real_interest_rate = R_path(1:end-1)-PI_path(2:end)-(Rss-mu);
-  if INITCONDIT==0
-    % the time 2 money shock is unexpected in period 1, so expected inflation equals steady-state
-      ex_ante_real_interest_rate = [0 ex_ante_real_interest_rate(2:end)]; 
-  end
+  
+%   Lambda_path = adjustment(adjtype, D_path./(ones(gridsize,1)*w_path), ksi, alpha, lbar, adjcost_path);
+% 
+% % Constructing PhiTilde (beginning-of-t distributions) from PhiHat (lagged distributions)
+%   PhiTilde_path = NaN*zeros(gridsize,TT);         
+%   for time=1:TT
+%       Rnow = Rmatrix(nump, PI_path(time), pstep);
+%       PhiTildeNow = Rnow*reshape(PhiHat_path(:,time),nump,nums)*TRANSMAT';
+%       PhiTilde_path(:,time)= PhiTildeNow(:);       % PdistEroded history
+%   end
+% 
+% % Now that we have constructed PhiTilde, we no longer need PhiHat.
+%   Phi_path = PhiHat_path;
+%   Phi_path(:,1) = [];  % here we are losing 1 period for Phi and everything computed from Phi
+% % So now we have history of Phi_t = distribution at time of production in period t.
+% 
+% % Compute mass of adjusters and fraction of adjusting firms
+%   Adjusters_path = Lambda_path.*PhiTilde_path;
+%   frac_adjusters_path = sum(Adjusters_path);
+% 
+%   ex_ante_real_interest_rate = R_path(1:end-1)-PI_path(2:end)-(Rss-mu);
+%   if INITCONDIT==0
+%     % the time 2 money shock is unexpected in period 1, so expected inflation equals steady-state
+%       ex_ante_real_interest_rate = [0 ex_ante_real_interest_rate(2:end)]; 
+%   end
 
 % % prepare matrices for inflation decomposition
 % Pchanges_path  = NaN*ones(nump,nums,TT); % needed for inflation decomposition later

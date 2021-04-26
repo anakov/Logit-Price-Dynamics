@@ -16,7 +16,7 @@ TFPshocks = zeros(1,TT);
 time1TFPshock = TFPshocks(1);
 
 distsim;
-if phiPI < 0, computeirf; else  computeirfM; end    % run Taylor rule or money growth shock
+if phiPI > 0, computeirf; else  computeirfM; end    % run Taylor rule or money growth shock
 
 if rem(TT,3)==0 
     

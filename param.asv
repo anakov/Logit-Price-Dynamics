@@ -1,7 +1,7 @@
 % Sets program execution and macro parameters
 
 % PROGRAM EXECUTION PARAMETERS           
-  adjtype      = 9;               % 1-SSDP; 2-Calvo; 3-FMC; 4-Wood-log 5-Wood-ent; 6-PPS; 7-ENT; 8-Nest-log;  9-Nest-ent
+  adjtype      = 8;               % 1-SSDP; 2-Calvo; 3-FMC; 4-Wood-log 5-Wood-ent; 6-PPS; 7-ENT; 8-Nest-log;  9-Nest-ent
   version      = 1;               % program version: set 3 to estimate the model. Set 1 for calibrated parameters
   finegrid     = 0;               % choose fine (1) or coarse (0) grid
   accuracy     = 1;               % controls residual tolerance. Use 1 or more for dynamics
@@ -9,13 +9,13 @@
   idioshocks   = 1;               % heterogeneity: 1-idio shocks; 0-fixed heterogeneity; -1 rep. agent
   
 % AGGREGATE SHOCK AND POLICY PARAMETERS  
-  mu    = infparam('Dominicks');  % long-run gross inflation target (check infparam.m for available options)
-  %mus = [2 10];
-  %mu = (1 + mus(2)/100)^(1/12);
-  phiR = 0.8;                     % monthly persistence of monetary policy shock 
-  phiPI = 0;                      % inflation response coefficient in Taylor rule (set to 0 for money rule)
+%  mu    = infparam('Dominicks');  % long-run gross inflation target (check infparam.m for available options)
+  mus    = [12];
+  mu = (1 + mus/100)^(1/12);
+  phiR = 0.9;                     % monthly persistence of monetary policy shock 
+  phiPI = 2;                      % inflation response coefficient in Taylor rule (set to 0 for money rule)
   phiC  = 0.5;                      % output response coefficient in Taylor rule
-  phiA  = 0.95;                      % persistence of aggregate technology shock 
+  phiA  = 0.9;                      % persistence of aggregate technology shock 
  
 % DISCOUNT AND PREFERENCE PARAMETERS     
   beta = 1.04^(-1/12);            % MONTHLY time discount factor

@@ -71,12 +71,12 @@ plot(scalefactor*(delta_wedge/WeightPriceDispers-1),linescolor,'MarkerSize', Mar
 title('Price dispersion')
 box off
 
-subplot(3,3,7)
-hold on
-plot(scalefactor*ex_ante_real_interest_rate,linescolor,'MarkerSize', MarkerSize)
-title('Real interest rate')
-xlabel('Weeks')
-box off
+% subplot(3,3,7)
+% hold on
+% plot(scalefactor*ex_ante_real_interest_rate,linescolor,'MarkerSize', MarkerSize)
+% title('Real interest rate')
+% xlabel('Weeks')
+% box off
 
 subplot(3,3,8)
 hold on
